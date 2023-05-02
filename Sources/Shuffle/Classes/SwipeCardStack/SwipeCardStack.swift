@@ -57,6 +57,9 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
       setNeedsLayout()
     }
   }
+  
+  public var foregroundCardColor: UIColor?
+  public var backgroundCardColor: UIColor?
 
   /// The data source index corresponding to the topmost card in the stack.
   public var topCardIndex: Int? {
@@ -126,10 +129,13 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
   }
 
   func layoutCard(_ card: SwipeCard, at position: Int) {
+    let isForegroundCard = position == 0
+    card.subviews.forEach { $0.isHidden = !isForegroundCard }
+    card.backgroundColor = isForegroundCard ? foregroundCardColor : backgroundCardColor
     card.transform = .identity
     card.frame = CGRect(origin: .zero, size: cardContainer.frame.size)
     card.transform = transform(forCardAtPosition: position)
-    card.isUserInteractionEnabled = position == 0
+    card.isUserInteractionEnabled = isForegroundCard
   }
 
   func scaleFactor(forCardAtPosition position: Int) -> CGPoint {
