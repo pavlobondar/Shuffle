@@ -229,7 +229,7 @@ open class SwipeCard: SwipeView {
 
   /// Calling this method triggers a reverse swipe (undo) animation.
   /// - Parameter direction: The direction from which the card will be coming off-screen.
-  public func reverseSwipe(from direction: SwipeDirection) {
+  open func reverseSwipe(from direction: SwipeDirection) {
     isUserInteractionEnabled = false
     animator.animateReverseSwipe(on: self, from: direction) { [weak self] finished in
       if finished {
